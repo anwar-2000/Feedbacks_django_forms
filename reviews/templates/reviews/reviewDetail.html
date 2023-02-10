@@ -1,0 +1,13 @@
+{% extends 'reviews/base.html' %}
+
+{% block title %}
+    Review Detail
+{% endblock  %}
+
+{% block content %}
+
+        <h1><span style="color : red">{{reviews.username}}</span> gave a rating of : ({{reviews.rating}})</h1>
+        <p>{{reviews.feedback}}</p>
+
+
+{% endblock  %}
