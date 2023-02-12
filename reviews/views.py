@@ -56,6 +56,14 @@ class Review_detail(DetailView):
     template_name="reviews/reviewDetail.html"
     model = Reviews
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        loaded_item = self.object #get the loaded item in the detail page
+        request = self.request #get the request of it
+        favorite_id =  request.session["favorite_review"]
+        context["is_favorite"] = favorite_id == str(loaded_item.id) #true if its the favorite
+        return context
+
 
    # def get_context_data(self, **kwargs):
     #    context = super().get_context_data(**kwargs)
@@ -64,3 +72,9 @@ class Review_detail(DetailView):
     #    context['review'] = review
     #    return context
        
+class AddFavoriteView(View):
+    def post(self,request):
+        review_id = request.POST['review__id']
+        #favoriteReview = Reviews.objects.get(pk=review_id)#this will return an object and we can't pass it as session object
+        request.session["favorite_review"] = review_id #pass it as a string
+        return HttpResponseRedirect("/reviews/"+review_id)

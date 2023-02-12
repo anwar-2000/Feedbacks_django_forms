@@ -8,6 +8,15 @@
 
         <h1><span style="color : red">{{reviews.username}}</span> gave a rating of : ({{reviews.rating}})</h1>
         <p>{{reviews.feedback}}</p>
+        {% if is_favorite %}
+            <h3>your favorite review</h3>
+        {% else %}
+        <form action="/reviews/favorite" method="POST" >
+            {% csrf_token %}
+            <input type="hidden" name="review__id" value="{{reviews.id}}">
+        <button>Favorite</button>
 
+        {% endif %}
+        
 
 {% endblock  %}
